@@ -16,6 +16,3 @@ npm install
 npm start
 8)	You will be prompted with a message asking you to confirm starting react app on different port since 3000 is used by node server. Enter ‘Y’.
 9)	A new webpage will open in your default browser.
-
-
-
