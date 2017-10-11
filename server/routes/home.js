@@ -1,42 +1,31 @@
-function add(req, res) {
-    var op1 = Number(req.body.op1);
-    var op2 = Number(req.body.op2);
-    var result = op1 + op2;
-    res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify({result: result}));
+var mysql = require('./mysql');
+
+function signup(req, res) {
+
+
+    var firstname = req.body.firstname;
+    var lastname = req.body.password;
+    var email = req.body.email;
+    var password = req.body.password;
+
+    var sqlInsertQuery = "insert into dropboxdb.userdata (firstname, lastname, email, password) values ('"+firstname+"','"+lastname+"','"+email+"','"+password+"');";
+
+    console.log("Query is "+sqlInsertQuery);
+
+    mysql.insertData(function (err){
+        if(err){
+            throw err;
+            console.log("error in inserting data is :"+err);
+        }else{
+
+                res.setHeader('Content-Type', 'application/json');
+                console.log("result after inserting data is :");
+               // res.send(JSON.stringify({result: result}));
+                console.log("hello");
+                res.send({status:201,message: "User Data Inserted"});
+
+        }
+    },sqlInsertQuery);
 }
 
-function sub(req, res) {
-    var op1 = Number(req.body.op1);
-    var op2 = Number(req.body.op2);
-
-    var result = op1 - op2;
-
-    res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify({result: result}));
-}
-
-function mult(req, res) {
-    var op1 = Number(req.body.op1);
-    var op2 = Number(req.body.op2);
-
-    var result = op1 * op2;
-
-    res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify({result: result}));
-}
-
-function div(req, res) {
-    var op1 = Number(req.body.op1);
-    var op2 = Number(req.body.op2);
-
-    var result = op1 / op2;
-
-    res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify({result: result}));
-}
-
-exports.add = add;
-exports.sub = sub;
-exports.mult = mult;
-exports.div = div;
+exports.signup = signup;
